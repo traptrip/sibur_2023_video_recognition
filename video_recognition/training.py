@@ -310,7 +310,7 @@ class Trainer:
                     self.exp_dir / "best_model.pth",
                 )
                 scripted = torch.jit.trace(
-                    self.net, train_loader.dataset[0][0].unsqueeze(0)
+                    self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
                 )
                 torch.save(scripted, self.exp_dir / "best_model.torchscript")
                 torch.save(checkpoint, self.exp_dir / "best_checkpoint.pth")
@@ -332,7 +332,7 @@ class Trainer:
                 self.exp_dir / "last_model.pth",
             )
             scripted = torch.jit.trace(
-                self.net, train_loader.dataset[0][0].unsqueeze(0)
+                self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
             )
             torch.save(scripted, self.exp_dir / "last_model.torchscript")
             torch.save(checkpoint, self.exp_dir / "last_checkpoint.pth")
