@@ -164,3 +164,6 @@ runs/
 *.mp4
 *.joblib
 *.torchscript
+*.zip
+*.tar.gz
+*.onnx
