@@ -163,3 +163,4 @@ sibur_data/
 runs/
 *.mp4
 *.joblib
+*.torchscript

@@ -63,6 +63,7 @@ class Trainer:
         clips_targets = [vp.parent.name for vp in videos_paths]
         clips_targets = le.fit_transform(clips_targets)
         self.classes_ = le.classes_
+        print(self.classes_)
 
         frames = np.concatenate(clips, axis=0)
         frames_targets = np.array(
@@ -312,7 +313,7 @@ class Trainer:
                 scripted = torch.jit.trace(
                     self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
                 )
-                torch.save(scripted, self.exp_dir / "best_model.torchscript")
+                torch.jit.save(scripted, self.exp_dir / "best_model.torchscript")
                 torch.save(checkpoint, self.exp_dir / "best_checkpoint.pth")
 
             # save last
@@ -334,7 +335,7 @@ class Trainer:
             scripted = torch.jit.trace(
                 self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
             )
-            torch.save(scripted, self.exp_dir / "last_model.torchscript")
+            torch.jit.save(scripted, self.exp_dir / "last_model.torchscript")
             torch.save(checkpoint, self.exp_dir / "last_checkpoint.pth")
 
             epoch += 1
