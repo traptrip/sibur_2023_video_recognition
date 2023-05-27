@@ -39,7 +39,6 @@ class Trainer:
         self.optimizer = config.optimizer
         self.clip_value = config.clip_value
         self.scheduler = config.scheduler
-        self.miner = config.miner
 
         self.n_epochs = config.n_epochs
         self.n_warm_epochs = config.n_warm_epochs
@@ -311,7 +310,7 @@ class Trainer:
                     self.exp_dir / "best_model.pth",
                 )
                 scripted = torch.jit.trace(
-                    self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
+                    self.net, train_loader.dataset[0][0].unsqueeze(0).to(self.device)
                 )
                 torch.jit.save(scripted, self.exp_dir / "best_model.torchscript")
                 torch.save(checkpoint, self.exp_dir / "best_checkpoint.pth")
@@ -333,7 +332,7 @@ class Trainer:
                 self.exp_dir / "last_model.pth",
             )
             scripted = torch.jit.trace(
-                self.net.cpu(), train_loader.dataset[0][0].unsqueeze(0)
+                self.net, train_loader.dataset[0][0].unsqueeze(0).to(self.device)
             )
             torch.jit.save(scripted, self.exp_dir / "last_model.torchscript")
             torch.save(checkpoint, self.exp_dir / "last_checkpoint.pth")

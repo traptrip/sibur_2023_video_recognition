@@ -21,7 +21,7 @@ if __name__ == "__main__":
     net.to(cfg.device)
 
     ### LOSS FUNC ###
-    criterion = torch.nn.CrossEntropyLoss()
+    criterion = torch.nn.CrossEntropyLoss(label_smoothing=0.1)
 
     ###
 
@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     ### SCHEDULER ###
     scheduler = torch.optim.lr_scheduler.CosineAnnealingLR(
-        optimizer, T_max=cfg.n_epochs, eta_min=1e-8
+        optimizer, T_max=cfg.n_epochs, eta_min=1e-5
     )
     ###
 

@@ -1,19 +1,12 @@
 import torch
 from pathlib import Path
-from timm.data import (
-    IMAGENET_DEFAULT_MEAN,
-    IMAGENET_DEFAULT_STD,
-    IMAGENET_INCEPTION_MEAN,
-    IMAGENET_INCEPTION_STD,
-    OPENAI_CLIP_MEAN,
-    OPENAI_CLIP_STD,
-)
+from timm.data import OPENAI_CLIP_MEAN, OPENAI_CLIP_STD
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
 
 class NetConfig:
-    backbone_name = "levit_384"
+    backbone_name = "levit_conv_384"
     projection_dims = 4
     pretrained = True
     grad_checkpointing = False
@@ -36,7 +29,7 @@ class Config:
 
     # exp paths
     resume = False
-    exp_dir = Path("runs/levit_384")
+    exp_dir = Path(f"runs/{NetConfig().backbone_name}__ls_0.1")
 
     pretrained_weights = None
     # pretrained_weights = torch.load(
@@ -52,13 +45,17 @@ class Config:
     criterion = None
     optimizer = None
     scheduler = None
-    miner = None
 
     transforms = {
         "train": A.Compose(
             [
                 A.Resize(224, 224),
                 A.HorizontalFlip(),
+                A.ShiftScaleRotate(
+                    shift_limit=0.05, scale_limit=0.05, rotate_limit=15, p=0.5
+                ),
+                A.RGBShift(r_shift_limit=15, g_shift_limit=15, b_shift_limit=15, p=0.5),
+                A.RandomBrightnessContrast(p=0.5),
                 A.Normalize(mean=OPENAI_CLIP_MEAN, std=OPENAI_CLIP_STD),
                 ToTensorV2(),
             ]

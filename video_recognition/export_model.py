@@ -5,9 +5,10 @@ import onnxruntime as ort
 import numpy as np
 from pathlib import Path
 
-DEFAULT_WEIGHTS_PATH = Path("../submit/best_model.torchscript")
-DEFAULT_ONNX_PATH = Path("../submit/model.onnx")
-DEFAULT_OPENVINO_PATH = Path("../submit/openvino_model")
+RUN_NAME = "levit_conv_128"
+DEFAULT_WEIGHTS_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/best_model.torchscript"
+DEFAULT_ONNX_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/model.onnx"
+DEFAULT_OPENVINO_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/openvino_model"
 
 
 def export_onnx(weights_path=DEFAULT_WEIGHTS_PATH, onnx_path=DEFAULT_ONNX_PATH):
