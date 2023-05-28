@@ -79,7 +79,7 @@ def predict(clip: np.ndarray):
             return id2label[BUFFER[1][i]]
 
     # if have no matches
-    frames = preprocess(clip, n_frames=48)
+    frames = preprocess(clip, n_frames=16)
 
     # predicts = model(frames).argmax(1).numpy()
 
@@ -89,7 +89,7 @@ def predict(clip: np.ndarray):
 
     predict = Counter(predicts).most_common(1)[0][0]
 
-    BUFFER[0].extend([frame[:window_size, :window_size] for frame in clip[:16]])
-    BUFFER[1].extend([predict] * 16)
+    BUFFER[0].extend([frame[:window_size, :window_size] for frame in clip[:32]])
+    BUFFER[1].extend([predict] * 32)
 
     return id2label[predict]

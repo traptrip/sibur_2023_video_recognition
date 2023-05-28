@@ -5,14 +5,18 @@ import onnxruntime as ort
 import numpy as np
 from pathlib import Path
 
-RUN_NAME = "levit_conv_128"
-DEFAULT_WEIGHTS_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/best_model.torchscript"
+RUN_NAME = "levit_conv_384__ls_0.1"
+DEFAULT_WEIGHTS_PATH = (
+    Path(__file__).parent / f"../runs/{RUN_NAME}/best_model.torchscript"
+)
 DEFAULT_ONNX_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/model.onnx"
 DEFAULT_OPENVINO_PATH = Path(__file__).parent / f"../runs/{RUN_NAME}/openvino_model"
 
 
 def export_onnx(weights_path=DEFAULT_WEIGHTS_PATH, onnx_path=DEFAULT_ONNX_PATH):
     model = torch.jit.load(weights_path, map_location="cpu")
+    model.eval()
+
     dummy_input = torch.randn(1, 3, 224, 224)
     # torch.onnx.export(model, dummy_input, onnx_path, opset_version=11)
     torch.onnx.export(
