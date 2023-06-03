@@ -4,25 +4,46 @@ from timm.data import OPENAI_CLIP_MEAN, OPENAI_CLIP_STD
 import albumentations as A
 from albumentations.pytorch import ToTensorV2
 
+"""
+eva_giant_patch14_224.clip_ft_in1k
+beitv2_large_patch16_224.in1k_ft_in22k_in1k
+vit_huge_patch14_clip_224.laion2b_ft_in12k_in1k
+vit_large_patch14_clip_224.openai_ft_in12k_in1k
+beit_large_patch16_224.in22k_ft_in22k_in1k
+beitv2_large_patch16_224.in1k_ft_in1k
+vit_large_patch14_clip_224.laion2b_ft_in1k
+deit3_huge_patch14_224.fb_in22k_ft_in1k
+deit3_large_patch16_224.fb_in22k_ft_in1k
+maxvit_rmlp_base_rw_224.sw_in12k_ft_in1k
+maxxvitv2_rmlp_base_rw_224.sw_in12k_ft_in1k
+caformer_m36.sail_in22k_ft_in1k
+beitv2_base_patch16_224.in1k_ft_in22k_in1k
+swin_large_patch4_window7_224.ms_in22k_ft_in1k
+vit_base_patch8_224.augreg2_in21k_ft_in1k
+vit_base_patch16_clip_224.laion2b_ft_in12k_in1k
+deit3_base_patch16_224.fb_in22k_ft_in1k
+beitv2_base_patch16_224.in1k_ft_in1k
+"""
+
 
 class NetConfig:
-    backbone_name = "levit_conv_384"
+    backbone_name = "eva_giant_patch14_224.clip_ft_in1k"
     projection_dims = 4
     pretrained = True
     grad_checkpointing = False
 
 
 class Config:
-    n_epochs = 2
+    n_epochs = 3
     n_warm_epochs = 0
     n_warm_steps = 0
-    batch_size = 256  # 112 512 64
+    batch_size = 128  # 112 512 64
     n_workers = 4
     use_amp = True
     clip_value = None
 
-    backbone_lr = 1e-3
-    head_lr = 1e-3
+    backbone_lr = 1e-5
+    head_lr = 1e-5
 
     # data
     data_dir = Path("data/sibur_data")

@@ -5,7 +5,7 @@ import onnxruntime as ort
 import numpy as np
 from pathlib import Path
 
-RUN_NAME = "levit_conv_384__ls_0.1"
+RUN_NAME = "deit_base_distilled_patch16_224__ls_0.1"
 DEFAULT_WEIGHTS_PATH = (
     Path(__file__).parent / f"../runs/{RUN_NAME}/best_model.torchscript"
 )
@@ -24,7 +24,7 @@ def export_onnx(weights_path=DEFAULT_WEIGHTS_PATH, onnx_path=DEFAULT_ONNX_PATH):
         dummy_input,
         onnx_path,
         export_params=True,
-        opset_version=11,
+        opset_version=12,
         do_constant_folding=True,
         input_names=["input"],
         output_names=["output"],

@@ -6,8 +6,6 @@ import cv2
 import numpy as np
 import onnxruntime as ort
 
-# from openvino.runtime import Core
-
 
 warnings.filterwarnings("ignore")
 
@@ -21,14 +19,6 @@ id2label = {0: "bridge_down", 1: "bridge_up", 2: "no_action", 3: "train_in_out"}
 def construct_model():
     ort_session = ort.InferenceSession(WEIGHTS_PATH)
     return ort_session
-
-    # ie = Core()
-    # model = ie.read_model(model=WEIGHTS_PATH / "model.xml")
-    # compiled_model = ie.compile_model(model=model, device_name="CPU")
-
-    # output_layer = compiled_model.output(0)
-
-    # return compiled_model, output_layer
 
 
 model = construct_model()
@@ -49,15 +39,11 @@ def preprocess(clip: np.ndarray, n_frames=None):
         frame = {model.get_inputs()[0].name: frame[None]}
         return frame
     else:
-        # step_size = clip.shape[0] // n_frames
-        # frames = clip[::step_size][:n_frames]
-        center = len(clip) // 2
-        frames = [
-            process_frame(frame)
-            for frame in clip[
-                max(0, center - n_frames // 2) : min(len(clip), center + n_frames // 2)
-            ]
-        ]
+        start_idx, end_idx = 0, len(clip)
+        indices = np.linspace(start_idx, end_idx, num=n_frames)
+        indices = np.clip(indices, start_idx, end_idx - 1).astype(np.int64)
+        frames = [process_frame(frame) for frame in clip[indices]]
+
         frames = np.stack(frames)
 
         frames = {model.get_inputs()[0].name: frames}

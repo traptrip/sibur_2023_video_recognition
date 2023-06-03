@@ -167,3 +167,11 @@ runs/
 *.zip
 *.tar.gz
 *.onnx
+*.csv
+*.pt
+*.pth
+*.xml
+*.bin
+*.jpg
+_submits/
+228-clip-zero-shot-image-classification.ipynb
