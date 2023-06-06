@@ -1,20 +1,23 @@
 import warnings
 from pathlib import Path
 
-import cv2
 import numpy as np
 from openvino.runtime import Core
+import albumentations as A
 
 
 warnings.filterwarnings("ignore")
 
-N_FRAMES = 16
+N_FRAMES = 4
 MEAN = [0.48145466, 0.4578275, 0.40821073]
 STD = [0.26862954, 0.26130258, 0.27577711]
 WEIGHTS_PATH = Path(__file__).parent.joinpath("model/model.xml")
 id2label = {0: "bridge_down", 1: "bridge_up", 2: "no_action", 3: "train_in_out"}
 labels = list(id2label.values())
-offset = (232 - 224) // 2
+
+transform = A.Compose(
+    [A.Resize(256, 256), A.CenterCrop(224, 224), A.Normalize(MEAN, STD)]
+)
 
 
 def construct_model():
@@ -29,28 +32,13 @@ model, output_name = construct_model()
 
 
 def process_frame(frame: np.ndarray):
-    frame = cv2.resize(frame, (224, 224))
-    # frame = frame[offset:-offset, offset:-offset]
-    frame = frame / 255.0
-    frame -= MEAN
-    frame /= STD
+    frame = transform(image=frame)["image"]
     frame = frame.astype(np.float16)
     return frame
 
 
 def process_clip(clip: np.ndarray):
     clip = np.concatenate([process_frame(frame)[None] for frame in clip])
-    # # seq, channels, width, height
-    # clip = clip[
-    #     :,
-    #     :,
-    #     center[0] - width // 2 : center[0] + width // 2,
-    #     center[0] - height // 2 : center[0] + height // 2,
-    # ].astype(np.float16)
-    # clip = clip / 255.0
-    # clip -= MEAN
-    # clip /= STD
-    # clip = clip.transpose(1, 0, 2, 3)[None]
     clip = clip.transpose(3, 0, 1, 2)[None]  # (seq,w,h,ch) -> (ch,seq,w,h)
     return clip
 
