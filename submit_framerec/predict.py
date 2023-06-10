@@ -67,11 +67,7 @@ def predict(clip: np.ndarray):
     # if have no matches
     frames = preprocess(clip, n_frames=16)
 
-    # predicts = model(frames).argmax(1).numpy()
-
     predicts = model.run(None, frames)[0].argmax(1)
-
-    # predicts = model([frames])[output_layer].argmax(1)
 
     predict = Counter(predicts).most_common(1)[0][0]
 

@@ -48,9 +48,6 @@ def preprocess(clip: np.ndarray, n_frames=8, step=2):
     indices = np.linspace(start_idx, end_idx, num=n_frames)
     indices = np.clip(indices, start_idx, end_idx - 1).astype(np.int32)
     clip = clip[indices]
-    # start = 0
-    # end = (start + n_frames) * step
-    # clip = clip[start:end:step]
     inputs = process_clip(clip)
     return {"input": inputs}
 

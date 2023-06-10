@@ -12,9 +12,9 @@ from tqdm import tqdm
 import pandas as pd
 from sklearn.metrics import f1_score
 
-from video_recognition.config import Config
-from video_recognition import utils
-from video_recognition.dataset import ScFramesDataset, get_frames
+from video_frames_recognition.config import Config
+from video_frames_recognition import utils
+from video_frames_recognition.dataset import ScFramesDataset, get_frames
 
 
 class Trainer:

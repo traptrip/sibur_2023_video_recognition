@@ -54,7 +54,7 @@ class Config:
 
     pretrained_weights = None
     # pretrained_weights = torch.load(
-    #     "runs/sd__vit_large_336__m_0.5__negaug_0.1__adamw/model_2ep.pth",
+    #     "path/to/weights.pth",
     #     map_location="cuda",
     # )["net_state"]
 
@@ -83,8 +83,8 @@ class Config:
         ),
         "test": A.Compose(
             [
-                A.Resize(224, 224),
-                # transforms.CenterCrop(size=(224, 224)),
+                A.Resize(256, 256),
+                A.CenterCrop(size=(224, 224)),
                 A.Normalize(mean=OPENAI_CLIP_MEAN, std=OPENAI_CLIP_STD),
                 ToTensorV2(),
             ]

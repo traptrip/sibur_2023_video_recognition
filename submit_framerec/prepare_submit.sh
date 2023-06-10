@@ -1,2 +1,2 @@
 chmod a+x predict.py && \
-    zip ../submit.zip *
+    zip ../submit_frames.zip *

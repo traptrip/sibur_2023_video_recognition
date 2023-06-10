@@ -3,8 +3,8 @@ from pathlib import Path
 import torch
 import timm
 
-from video_recognition.training import Trainer
-from video_recognition.config import Config
+from video_frames_recognition.training import Trainer
+from video_frames_recognition.config import Config
 
 if __name__ == "__main__":
     cfg = Config()
@@ -27,31 +27,6 @@ if __name__ == "__main__":
 
     ### OPTIMIZER ###
     classifier = net.get_classifier()
-
-    # if "levit" in cfg.net.backbone_name:
-    #     param_groups = [
-    #         {
-    #             "params": list(net.parameters())[:-8],
-    #             "lr": cfg.backbone_lr,
-    #         },
-    #         {
-    #             "params": list(classifier[0].parameters())
-    #             + list(classifier[1].parameters()),
-    #             "lr": cfg.head_lr,
-    #         },
-    #     ]
-    # else:
-    #     param_groups = [
-    #         {
-    #             "params": list(net.parameters())[:-2],
-    #             "lr": cfg.backbone_lr,
-    #         },
-    #         {
-    #             "params": list(classifier.parameters()) + list(criterion.parameters()),
-    #             "lr": cfg.head_lr,
-    #         },
-    #     ]
-
     optimizer = torch.optim.AdamW(net.parameters(), cfg.head_lr)
     ###
 

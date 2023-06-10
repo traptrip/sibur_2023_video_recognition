@@ -1,11 +1,9 @@
 import gc
-from typing import Union, Optional
+from typing import Optional
 from pathlib import Path
 
 import cv2
 import numpy as np
-import pandas as pd
-import torch
 from torch.utils.data import Dataset
 from PIL import Image
 from sklearn.preprocessing import LabelEncoder
@@ -39,7 +37,6 @@ class ScFramesDataset(Dataset):
         frames=None,
         targets=None,
     ):
-
         if frames is None and targets is None:
             le = LabelEncoder()
             videos_paths = list(root.rglob("*.mp4"))

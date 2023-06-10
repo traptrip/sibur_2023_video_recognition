@@ -7,7 +7,7 @@ from openvino.runtime import Core
 
 warnings.filterwarnings("ignore")
 
-N_FRAMES = 8
+N_FRAMES = 4
 MEAN = (0.48145466, 0.4578275, 0.40821073)
 STD = (0.26862954, 0.26130258, 0.27577711)
 WEIGHTS_PATH = Path(__file__).parent.joinpath("model/model.xml")
@@ -46,9 +46,6 @@ def preprocess(clip: np.ndarray, n_frames=8, step=2):
     indices = np.linspace(start_idx, end_idx, num=n_frames)
     indices = np.clip(indices, start_idx, end_idx - 1).astype(np.int32)
     clip = clip[indices]
-    # start = 0
-    # end = (start + n_frames) * step
-    # clip = clip[start:end:step]
     inputs = process_clip(clip)
     return {"input": inputs}
 
