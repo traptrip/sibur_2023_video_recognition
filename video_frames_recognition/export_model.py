@@ -5,7 +5,7 @@ import onnxruntime as ort
 import numpy as np
 from pathlib import Path
 
-RUN_NAME = "deit_base_distilled_patch16_224__ls_0.1"
+RUN_NAME = "???"
 DEFAULT_WEIGHTS_PATH = (
     Path(__file__).parent / f"../runs/{RUN_NAME}/best_model.torchscript"
 )
