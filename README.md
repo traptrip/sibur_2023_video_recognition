@@ -1,4 +1,4 @@
-# SIBUR Challenge 2023 (3rd place)
+# SIBUR Challenge 2023 video recognition (3rd place)
 ![sibur_challenge_image](./data/assets/sibur.png)
 SIBUR 2023 challenge video recognition task
 
