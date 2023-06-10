@@ -2,6 +2,8 @@
 ![sibur_challenge_image](./data/assets/sibur.png)
 SIBUR 2023 challenge video recognition task
 
+Classes: Bridge up, Bridge down, No Action, Train in out
+
 # Videos examples
 | Bridge up | Bridge down | No Action | Train in out |
 |-----------|-------------|-----------|--------------|
