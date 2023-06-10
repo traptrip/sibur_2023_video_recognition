@@ -1,7 +1,10 @@
-# SIBUR Challenge 2023
-## 3rd place solution
+# SIBUR Challenge 2023 (3rd place)
+![sibur_challenge_image](./data/assets/sibur.png)
 SIBUR 2023 challenge video recognition task
-___
+
+# Videos examples
+| Bridge up | Bridge down | No Action | Train in out |
+| ![](data/assets/brige_up.gif) | ![](data/assets/brige_down.gif) | ![](data/assets/no_action.gif) | ![](data/assets/train_in_out.gif) |
 
 # Final code for video classification 
 **Public score:** 0.989044
